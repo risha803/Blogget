@@ -18,7 +18,7 @@ module.exports = {
       const path = `${dir ? `${dir}/` : ''}${component_name}`;
       const absPath = `src/components/${path}`;
 
-      return {...answer, path, absPath};
+      return {...answers, path, absPath};
     });
   }
 }
