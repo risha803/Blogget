@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./Auth.module.css";
 
 export const Auth = ({ auth }) => {
