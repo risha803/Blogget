@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import Heading from "./Heading";
 import Search from "./Search";
 
-const Header = (props) => {
+const Header = () => {
   return (
     <header className={style.header}>
       <Layout>

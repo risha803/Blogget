@@ -19,7 +19,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "comp": "hygen create component"
+    "comp": "hygen create component",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +44,11 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
     "hygen": "^6.2.11"
   },
   "repository": {

@@ -1,11 +1,15 @@
+import React from "react";
+import PropTypes from "prop-types";
 import style from "./Auth.module.css";
 
 export const Auth = ({ auth }) => {
   return (
     <button className={style.button}>
       {auth ? (
-        auth
+        // Если auth — булево true, можно отобразить, например, текст "Выйти" или иконку
+        "Выйти"
       ) : (
+        // Если auth false — показываем иконку
         <svg
           className={style.svg}
           width="128"
@@ -24,4 +28,8 @@ export const Auth = ({ auth }) => {
       )}
     </button>
   );
+};
+
+Auth.propTypes = {
+  auth: PropTypes.bool.isRequired,
 };
