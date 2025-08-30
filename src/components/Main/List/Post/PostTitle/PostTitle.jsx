@@ -1,8 +1,19 @@
 import style from './PostTitle.module.css';
+import PropTypes from 'prop-types';
 
-export const PostTitle = () => {
-  console.log(style);
+const PostTitle = ({title}) => {
+  console.log('Received title:', title);
+
   return (
-    <div></div>
+    <h2 className={style.title}>
+      <a className={style.linkPost} href='#post'>{title}</a>
+    </h2>
   );
 };
+
+PostTitle.propTypes = {
+  title: PropTypes.string.isRequired,
+};
+
+export default PostTitle;
+

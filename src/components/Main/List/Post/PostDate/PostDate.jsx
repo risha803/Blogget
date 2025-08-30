@@ -1,8 +1,16 @@
 import style from './PostDate.module.css';
+import PropTypes from 'prop-types';
+import formatDate from '../../../../../utilits/formatDate';
 
-export const PostDate = () => {
-  console.log(style);
+export const PostDate = ({date}) => {
+  console.log(date);
   return (
-    <div></div>
+    <time className={style.date} dateTime={date}>{formatDate(date)}</time>
   );
 };
+
+PostDate.propTypes = {
+  date: PropTypes.string.isRequired,
+};
+
+export default PostDate;
