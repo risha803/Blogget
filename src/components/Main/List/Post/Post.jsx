@@ -6,6 +6,7 @@ import PostTitle from './PostTitle/PostTitle';
 import PostAuthor from './PostAuthor/PostAuthor';
 import PostRaiting from './PostRaiting/PostRaiting';
 import PostDate from './PostDate/PostDate';
+import DeleteButton from './DeleteButton/DeleteButton';
 
 
 export const Post = ({postData}) => {
@@ -19,6 +20,7 @@ export const Post = ({postData}) => {
       </div>
       <PostRaiting ups={ups}/>
       <PostDate date={date} />
+      <DeleteButton />
     </li>
   );
 };
