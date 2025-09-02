@@ -1,13 +1,15 @@
 import style from './PostTitle.module.css';
 import PropTypes from 'prop-types';
+import {Text} from '../../../../../UI/Text/Text';
 
 const PostTitle = ({title}) => {
   console.log('Received title:', title);
 
   return (
-    <h2 className={style.title}>
-      <a className={style.linkPost} href='#post'>{title}</a>
-    </h2>
+    <Text As='h2' className={style.title}>
+      <Text As='a' size={18} tsize={24}
+        className={style.linkPost} href='#post'>{title}</Text>
+    </Text>
   );
 };
 

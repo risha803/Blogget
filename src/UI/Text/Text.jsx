@@ -1,21 +1,50 @@
-import classNames from "classnames/bind";
+import classNames from 'classnames/bind';
 import style from './Text.module.css';
+import PropTypes from 'prop-types';
 
-export const Text = prop => {
+export const Text = (prop) => {
   const {
     As = 'span',
     color = 'black',
     size,
-    tsie,
+    tsize,
     dsize,
     className,
     children,
+    href,
+    center,
+    medium,
+    bold,
   } = prop;
 
   const classes = classNames(
     className,
-    style[`fs${size}`],
     style[color],
+    {[style.center]: center},
+    {[style[`fs${size}`]]: size},
+    {[style[`fst${tsize}`]]: tsize},
+    {[style[`fsd${dsize}`]]: dsize},
+    {[style.medium]: medium},
+    {[style.bold]: bold},
   );
-  return <As className={classes}>{children}</As>
+
+  return <As className={classes} href={href}>{children}</As>;
+};
+
+Text.PropTypes = {
+  As: PropTypes.string,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  tsize: PropTypes.number,
+  dsize: PropTypes.number,
+  className: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),
+  href: PropTypes.string,
+  center: PropTypes.bool,
+  medium: PropTypes.bool,
+  bold: PropTypes.bool,
 };

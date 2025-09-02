@@ -2,26 +2,27 @@ import React, {useEffect, useState} from 'react';
 import style from './Tabs.module.css';
 import PropTypes from 'prop-types';
 import {assignId} from '../../../utilits/generateRandomId';
+import {Text} from '../../../UI/Text/Text';
 
 import {ReactComponent as ArrowIcon} from './img/arrow.svg';
-import {ReactComponent as EyeIcon} from './img/eye.svg';
 import {ReactComponent as HomeIcon} from './img/home.svg';
-import {ReactComponent as PostIcon} from './img/post.svg';
-import {ReactComponent as SaveIcon} from './img/save.svg';
+import {ReactComponent as BestIcon} from './img/best.svg';
+import {ReactComponent as HotIcon} from './img/hot.svg';
+import {ReactComponent as TopIcon} from './img/top.svg';
 import {debounceRaf} from '../../../utilits/debounce';
 
 const LIST = [
   {value: 'Главная',
     Icon: HomeIcon,
   },
-  {value: 'Просмотренные',
-    Icon: EyeIcon,
+  {value: 'Топ',
+    Icon: TopIcon,
   },
-  {value: 'Сохраненные',
-    Icon: SaveIcon,
+  {value: 'Лучшие',
+    Icon: BestIcon,
   },
-  {value: 'Мои посты',
-    Icon: PostIcon,
+  {value: 'Горячие',
+    Icon: HotIcon,
   },
 ].map(assignId);
 
@@ -61,12 +62,12 @@ export const Tabs = () => {
       {(isDropDownOpen || !isDropDown) && <ul className={style.list}>
         {LIST.map((item) => (
           <li className={style.item} key={item.id}>
-            <button
+            <Text As='button' size={18} tsize={22} center
               className={style.btn}
               onClick={() => {}}>
               {item.value}
               {item.Icon && <item.Icon width={30} height={30} />}
-            </button>
+            </Text>
           </li>
         ))}
       </ul>}
