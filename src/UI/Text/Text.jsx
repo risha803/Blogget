@@ -31,18 +31,14 @@ export const Text = (prop) => {
   return <As className={classes} href={href}>{children}</As>;
 };
 
-Text.PropTypes = {
+Text.propTypes = {
   As: PropTypes.string,
   color: PropTypes.string,
   size: PropTypes.number,
   tsize: PropTypes.number,
   dsize: PropTypes.number,
   className: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.array,
-  ]),
+  children: PropTypes.node,
   href: PropTypes.string,
   center: PropTypes.bool,
   medium: PropTypes.bool,
