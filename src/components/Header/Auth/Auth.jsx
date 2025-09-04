@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {URL_API} from '../../../api/const';
 import PropTypes from 'prop-types';
 import style from './Auth.module.css';
@@ -9,6 +8,7 @@ import {Text} from '../../../UI/Text';
 
 export const Auth = ({token}) => {
   const [auth, setAuth] = useState({});
+  const [logIn, setLogIn] = useState(false);
 
   useEffect(() => {
     fetch(`${URL_API}/api/v1/me`, {
@@ -18,7 +18,7 @@ export const Auth = ({token}) => {
     })
       .then(response => response.json())
       .then(({name, icon_img: iconImg}) => {
-        const img = iconImg.replace(/\?.*$/);
+        const img = iconImg.replace(/\?.*$/, '');
         setAuth({name, img});
       })
       .catch(error => {
@@ -26,29 +26,39 @@ export const Auth = ({token}) => {
         setAuth({});
       });
   }, [token]);
-  console.log('auth:', auth);
-  console.log('auth.name:', auth.name);
+
+  const logOut = () => {
+    setAuth({});
+    setLogIn(false);
+  };
 
   return (
     <div className={style.container}>
       {auth.name ? (
-        <button className={style.btn}>
-          <img
-            className={style.img}
-            src={auth.img}
-            title={auth.name}
-            alt={auth.name}
-          />
-        </button>
+        <div className={style.authWrapper}>
+          <button className={style.btn}>
+            <img
+              className={style.img}
+              src={auth.img}
+              title={auth.name}
+              alt={auth.name}
+              onClick={() => setLogIn(!logIn)}
+            />
+          </button>
+          {logIn && (
+            <button className={style.logout} onClick={logOut}>
+              Выйти
+            </button>
+          )}
+        </div>
       ) : (
         <Text className={style.authLink} As='a' href={urlAuth}>
-          <LoginIcon width={36} height={36}></LoginIcon>
+          <LoginIcon width={36} height={36} />
         </Text>
       )}
     </div>
   );
 };
-
 
 Auth.propTypes = {
   token: PropTypes.string,
