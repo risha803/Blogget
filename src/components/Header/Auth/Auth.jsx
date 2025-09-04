@@ -6,7 +6,7 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
 
-export const Auth = ({token}) => {
+export const Auth = ({token, delToken}) => {
   const [auth, setAuth] = useState({});
   const [logIn, setLogIn] = useState(false);
 
@@ -30,6 +30,7 @@ export const Auth = ({token}) => {
   const logOut = () => {
     setAuth({});
     setLogIn(false);
+    delToken();
   };
 
   return (
@@ -62,5 +63,6 @@ export const Auth = ({token}) => {
 
 Auth.propTypes = {
   token: PropTypes.string,
+  delToken: PropTypes.string,
 };
 
