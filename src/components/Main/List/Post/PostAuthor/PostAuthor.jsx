@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text/Text';
 
 export const PostAuthor = ({author}) => {
-  console.log('author:', author);
   return (
     <Text As='a' color='orange'
       className={style.linkAuthor} href='#author'

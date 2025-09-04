@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import formatDate from '../../../../../utilits/formatDate';
 
 export const PostDate = ({date}) => {
-  console.log(date);
   return (
     <time className={style.date} dateTime={date}>{formatDate(date)}</time>
   );

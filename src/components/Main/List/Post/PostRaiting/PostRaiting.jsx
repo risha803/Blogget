@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Text} from '../../../../../UI/Text/Text';
 
 export const PostRaiting = ({ups}) => {
-  console.log(ups);
   return (
     <div className={style.rating}>
       <button className={style.up} aria-label='Увеличивать рейтинг' />

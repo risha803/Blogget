@@ -65,7 +65,6 @@ export const Tabs = () => {
               className={style.item}
               key={item.id}
               onClick={() => {
-                console.log('LI clicked for item:', item);
                 handleTabSelect(item);
               }}
             >
