@@ -10,10 +10,12 @@ import DeleteButton from './DeleteButton/DeleteButton';
 
 
 export const Post = ({postData}) => {
-  const {title, author, ups, date} = postData;
+  const {title, author, ups, date, thumbnail} = postData;
+
+  const imageSrc = thumbnail || notphoto;
   return (
     <li className={style.post}>
-      <PostImage src={notphoto} alt={title} />
+      <PostImage src={imageSrc} alt={title} />
       <div className={style.content}>
         <PostTitle title={postData.title}/>
         <PostAuthor author={author}/>
@@ -31,5 +33,6 @@ Post.propTypes = {
     author: PropTypes.string.isRequired,
     ups: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired,
+    thumbnail: PropTypes.string,
   }).isRequired,
 };

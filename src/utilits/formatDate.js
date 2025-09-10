@@ -1,14 +1,12 @@
-const formatDate = date => {
+const formatDate = (date) => {
   const options = {
-    years: 'numeric',
+    year: 'numeric',
     month: 'numeric',
     day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   };
-
-  return new Intl.DateTimeFormat('ru', options)
-    .format(new Date(date));
+  return new Intl.DateTimeFormat('ru', options).format(new Date(date));
 };
 
 export default formatDate;

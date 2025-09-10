@@ -20,6 +20,7 @@ export const useAuth = () => {
       .then(({name, icon_img: iconImg}) => {
         const img = typeof iconImg === 'string' ?
           iconImg.replace(/\?.*$/, '') : '';
+        console.log(name, img);
         setAuth({name, img});
       })
       .catch(error => {
