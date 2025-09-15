@@ -7,7 +7,8 @@ import PostAuthor from './PostAuthor/PostAuthor';
 import PostRaiting from './PostRaiting/PostRaiting';
 import PostDate from './PostDate/PostDate';
 import DeleteButton from './DeleteButton/DeleteButton';
-
+import Modal from '../../../Modal';
+import {useState} from 'react';
 
 export const Post = ({postData}) => {
   const {
@@ -19,18 +20,34 @@ export const Post = ({postData}) => {
     thumbnail
   } = postData;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const imageSrc = thumbnail || notphoto;
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <li className={style.post}>
-      <PostImage src={imageSrc} alt={title} />
-      <div className={style.content}>
-        <PostTitle title={postData.title} markdown={markdown}/>
-        <PostAuthor author={author}/>
-      </div>
-      <PostRaiting ups={ups}/>
-      <PostDate date={date} />
-      <DeleteButton />
-    </li>
+    <>
+      <li className={style.post}>
+        <PostImage src={imageSrc} alt={title} />
+        <div className={style.content}>
+          <PostTitle title={title} onClick={openModal} />
+          <PostAuthor author={author} />
+        </div>
+        <PostRaiting ups={ups}/>
+        <PostDate date={date} />
+        <DeleteButton />
+      </li>
+
+      {isModalOpen && (
+        <Modal
+          title={title}
+          author={author}
+          markdown={markdown}
+          onClose={closeModal}
+        />
+      )}
+    </>
   );
 };
 
