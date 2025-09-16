@@ -12,12 +12,12 @@ import {useState} from 'react';
 
 export const Post = ({postData}) => {
   const {
+    id,
     title,
     author,
     ups,
     date,
-    selftext: markdown,
-    thumbnail
+    thumbnail,
   } = postData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +25,10 @@ export const Post = ({postData}) => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  if (!postData) {
+    return <p>Ошибка загрузки поста!</p>;
+  }
 
   return (
     <>
@@ -34,30 +38,23 @@ export const Post = ({postData}) => {
           <PostTitle title={title} onClick={openModal} />
           <PostAuthor author={author} />
         </div>
-        <PostRaiting ups={ups}/>
+        <PostRaiting ups={ups} />
         <PostDate date={date} />
         <DeleteButton />
       </li>
 
-      {isModalOpen && (
-        <Modal
-          title={title}
-          author={author}
-          markdown={markdown}
-          onClose={closeModal}
-        />
-      )}
+      {isModalOpen && <Modal id={id} onClose={closeModal} />}
     </>
   );
 };
 
 Post.propTypes = {
   postData: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     ups: PropTypes.number.isRequired,
     date: PropTypes.string.isRequired,
     thumbnail: PropTypes.string,
-    selftext: PropTypes.string.isRequired,
   }).isRequired,
 };
