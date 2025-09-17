@@ -1,12 +1,14 @@
 import {useContext} from 'react';
 import {tokenContext} from '../../../context/tokenContext';
 import style from './FormComments.module.css';
-import {commentContext} from '../../../context/commentContext';
+import {useDispatch, useSelector} from 'react-redux';
+import {updateComment} from '../../../store';
 
 const FormComment = () => {
+  const value = useSelector(state => state.comment);
+  const dispatch = useDispatch();
   // const inputRef = useRef(null);
   const {username} = useContext(tokenContext);
-  const {value, setValue} = useContext(commentContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,7 +16,7 @@ const FormComment = () => {
   };
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    dispatch(updateComment(e.target.value));
   };
 
   return (
