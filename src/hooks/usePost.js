@@ -1,12 +1,12 @@
-import {useState, useEffect, useContext} from 'react';
+import {useState, useEffect} from 'react';
 import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContext';
 import formatDate from '../utilits/formatDate';
+import {useSelector} from 'react-redux';
 
 export const usePost = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
-  const {token} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
 
   const isImageUrl = (url) => {
     const imageRegex = /\.(jpeg|jpg|gif|png|bmp|webp)$/i;

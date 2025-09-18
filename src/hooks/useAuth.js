@@ -1,11 +1,18 @@
-import {useState, useEffect, useContext} from 'react';
+import {useState, useEffect} from 'react';
 import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContext';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteToken} from '../store';
 
 export const useAuth = () => {
-  const [auth, setAuth] = useState({});
-  const {token, delToken} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
+  const dispatch = useDispatch();
+  const [auth, setAuth] = useState(null);
+
   useEffect(() => {
+    if (!token) {
+      setAuth(null);
+      return;
+    }
     fetch(`${URL_API}/api/v1/me`, {
       headers: {
         Authorization: `bearer ${token}`,
@@ -13,6 +20,7 @@ export const useAuth = () => {
     })
       .then(response => {
         if (response.status === 401) {
+          dispatch(deleteToken());
           throw new Error(response.status);
         }
         return response.json();
@@ -26,7 +34,7 @@ export const useAuth = () => {
       .catch(error => {
         console.error(error);
         setAuth({});
-        delToken();
+        dispatch(deleteToken());
       });
   }, [token]);
 

@@ -1,30 +1,34 @@
-import {useState, useContext} from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import style from './Auth.module.css';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {tokenContext} from '../../../context/tokenContext';
-import {authContext} from '../../../context/authContext';
+import {useDispatch} from 'react-redux';
+import {deleteToken} from '../../../store';
+import {useAuth} from '../../../hooks/useAuth';
+
 
 export const Auth = () => {
-  const {delToken} = useContext(tokenContext);
   const [logIn, setLogIn] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
+  const {auth, clearAuth} = useAuth();
+  const dispatch = useDispatch();
 
   const logOut = () => {
     setLogIn(false);
-    delToken();
+    dispatch(deleteToken());
     clearAuth();
   };
+  const isAuth = auth && typeof auth === 'object' && auth.name;
+
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {isAuth ? (
         <div className={style.authWrapper}>
           <button className={style.btn}>
             <img
               className={style.img}
-              src={auth.img}
+              src={auth.img || ''}
               title={auth.name}
               alt={auth.name}
               onClick={() => setLogIn(!logIn)}

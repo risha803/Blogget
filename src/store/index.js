@@ -15,6 +15,21 @@ export const updateComment = comment => ({
   comment,
 });
 
+export const updateToken = (token) => {
+  setToken(token);
+  return {
+    type: UPDATE_TOKEN,
+    token,
+  };
+};
+
+export const deleteToken = () => {
+  localStorage.removeItem('bearer');
+  return {
+    type: DELETE_TOKEN,
+  };
+};
+
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_COMMENT:
@@ -22,14 +37,14 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         comment: action.comment,
       };
-      case UPDATE_TOKEN:
-        setToken(action.token);
+    case UPDATE_TOKEN:
+      setToken(action.token);
       return {
         ...state,
         token: action.token,
       };
-      case DELETE_TOKEN:
-        setToken('');
+    case DELETE_TOKEN:
+      setToken('');
       return {
         ...state,
         token: '',
