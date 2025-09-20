@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 export const usePost = () => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.token.token);
 
   const isImageUrl = (url) => {
     const imageRegex = /\.(jpeg|jpg|gif|png|bmp|webp)$/i;
