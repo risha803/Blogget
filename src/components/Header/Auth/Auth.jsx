@@ -7,7 +7,7 @@ import {Text} from '../../../UI/Text';
 import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
 import {useAuth} from '../../../hooks/useAuth';
-import AuthLoader from './AuthLoader';
+import {Preloader} from '../../../UI/Text/Preloader';
 
 
 export const Auth = () => {
@@ -24,7 +24,7 @@ export const Auth = () => {
 
   return (
     <div className={style.container}>
-      {loading ? (<AuthLoader />) : isAuth ? (
+      {loading ? (<Preloader />) : isAuth ? (
         <div className={style.authWrapper}>
           <button className={style.btn}>
             <img

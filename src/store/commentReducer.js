@@ -1,22 +1,39 @@
-const UPDATE_COMMENT = 'UPDATE_COMMENT';
+import {
+  COMMENTS_REQUEST,
+  COMMENTS_SUCCESS,
+  COMMENTS_ERROR,
+} from './commentAction';
 
 const initialState = {
-  comment: 'Привет Redux',
+  status: '',
+  post: null,
+  comments: [],
+  error: null,
 };
 
-export const updateComment = comment => ({
-  type: UPDATE_COMMENT,
-  comment,
-});
-
-export const commentReducer = (state = initialState, action) => {
+export const commentsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_COMMENT:
+    case COMMENTS_REQUEST:
       return {
         ...state,
-        comment: action.comment,
+        status: 'loading',
+        error: null,
+      };
+    case COMMENTS_SUCCESS:
+      return {
+        ...state,
+        status: 'loaded',
+        post: action.post,
+        comments: action.comments,
+      };
+    case COMMENTS_ERROR:
+      return {
+        ...state,
+        status: 'error',
+        error: action.error,
       };
     default:
       return state;
   }
 };
+

@@ -7,9 +7,11 @@ import Comments from './Comments/Comments';
 import FormComment from './FormComments/FormComments';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import {useEffect} from 'react';
+import {Preloader} from '../../UI/Text/Preloader';
 
 export const Modal = ({id, onClose}) => {
-  const [post, comments, loading] = useCommentsData(id);
+  const {post, comments, status, error} = useCommentsData(id);
+  console.log({post, comments, status, error});
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -24,14 +26,15 @@ export const Modal = ({id, onClose}) => {
   return ReactDOM.createPortal(
     <div className={style.overlay} onClick={onClose}>
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
-        {loading || !post ? (
-          <p>Загрузка...</p>
-        ) : (
+        {status === 'loading' && <Preloader />}
+        {status === 'error' && <p className={style.error}>Ошибка: {error}</p>}
+        {status === 'loaded' && post && (
           <>
             <h2 className={style.title}>{post.title}</h2>
             <div className={style.content}>
-              <Markdown options={{overrides:
-                {a: {target: '_blank'}}}}>{post.selftext}</Markdown>
+              <Markdown options={{overrides: {a: {target: '_blank'}}}}>
+                {post.selftext}
+              </Markdown>
             </div>
             <p className={style.author}>{post.author}</p>
 
@@ -53,3 +56,4 @@ Modal.propTypes = {
   id: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
+
