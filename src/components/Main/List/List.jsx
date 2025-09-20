@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import Post from './Post';
 import style from './List.module.css';
-import {postContext} from '../../../context/postContext';
+import {usePost} from '../../../hooks/usePost';
 
 export const List = () => {
-  const {posts, loading, error} = useContext(postContext);
+  const {posts, loading, error} = usePost();
 
   if (loading) return <p>Загрузка постов...</p>;
   if (error) return <p>Ошибка загрузки: {error.message}</p>;
