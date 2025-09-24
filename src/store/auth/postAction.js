@@ -4,15 +4,23 @@ import formatDate from '../../utilits/formatDate';
 
 export const POST_REQUEST = 'POST_REQUEST';
 export const POST_REQUEST_SUCCESS = 'POST_REQUEST_SUCCESS';
+export const POST_REQUEST_SUCCESS_AFTER = 'POST_REQUEST_SUCCESS_AFTER';
 export const POST_REQUEST_ERROR = 'POST_REQUEST_ERROR';
 
 export const postRequest = () => ({
   type: POST_REQUEST,
 });
 
-export const postRequestSuccess = (data) => ({
+export const postRequestSuccess = (data, after) => ({
   type: POST_REQUEST_SUCCESS,
   data,
+  after,
+});
+
+export const postRequestSuccessAfter = (data, after) => ({
+  type: POST_REQUEST_SUCCESS_AFTER,
+  data,
+  after,
 });
 
 export const postRequestError = (error) => ({
@@ -20,13 +28,26 @@ export const postRequestError = (error) => ({
   error,
 });
 
-export const postRequestDataAsync = () => (dispatch, getState) => {
+export const postRequestDataAsync = (isFirstLoad =
+false) => (dispatch, getState) => {
   const token = getState().token.token;
-  if (!token) return;
+  const after = getState().post.after;
+
+  if (!token) {
+    console.warn('Token отсутствует');
+    return;
+  }
+
+  if (!isFirstLoad && after === null) {
+    console.log('Больше постов нет');
+    return;
+  }
 
   dispatch(postRequest());
 
-  axios.get(`${URL_API}/best`, {
+  const url = `${URL_API}/best?limit=10${!isFirstLoad && after ?
+    `&after=${after}` : ''}`;
+  axios.get(url, {
     headers: {
       Authorization: `bearer ${token}`,
     },
@@ -48,10 +69,17 @@ export const postRequestDataAsync = () => (dispatch, getState) => {
         date: formatDate(data.created_utc * 1000),
       }));
 
-      dispatch(postRequestSuccess(normalizedPosts));
+      const newAfter = data.data.after;
+
+      if (isFirstLoad) {
+        dispatch(postRequestSuccess(normalizedPosts, newAfter));
+      } else {
+        dispatch(postRequestSuccessAfter(normalizedPosts, newAfter));
+      }
     })
     .catch(err => {
-      console.error('Fetch error:', err);
+      console.error('Ошибка запроса:', err);
       dispatch(postRequestError(err.message));
     });
 };
+
