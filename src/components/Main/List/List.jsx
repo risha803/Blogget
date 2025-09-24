@@ -3,15 +3,17 @@ import Post from './Post';
 import style from './List.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {postRequestDataAsync} from '../../../store/auth/postAction';
+import {useParams} from 'react-router-dom';
 
 export const List = () => {
   const {data: posts, loading, error, after} = useSelector(state => state.post);
   const endList = useRef(null);
   const dispatch = useDispatch();
+  const {page} = useParams();
 
   useEffect(() => {
-    dispatch(postRequestDataAsync(true));
-  }, [dispatch]);
+    dispatch(postRequestDataAsync(true, page));
+  }, [dispatch, page]);
 
   useEffect(() => {
     if (!endList.current || !after) return;

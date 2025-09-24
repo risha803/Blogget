@@ -6,6 +6,7 @@ export const POST_REQUEST = 'POST_REQUEST';
 export const POST_REQUEST_SUCCESS = 'POST_REQUEST_SUCCESS';
 export const POST_REQUEST_SUCCESS_AFTER = 'POST_REQUEST_SUCCESS_AFTER';
 export const POST_REQUEST_ERROR = 'POST_REQUEST_ERROR';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
 export const postRequest = () => ({
   type: POST_REQUEST,
@@ -28,11 +29,20 @@ export const postRequestError = (error) => ({
   error,
 });
 
+export const changePage = (page) => ({
+  type: CHANGE_PAGE,
+  page,
+});
+
 export const postRequestDataAsync = (isFirstLoad =
-false) => (dispatch, getState) => {
+false, newPage) => (dispatch, getState) => {
+  let page = getState().post.page;
+  if (newPage) {
+    page = newPage;
+    dispatch(changePage(page));
+  }
   const token = getState().token.token;
   const after = getState().post.after;
-
   if (!token) {
     console.warn('Token отсутствует');
     return;
@@ -45,7 +55,7 @@ false) => (dispatch, getState) => {
 
   dispatch(postRequest());
 
-  const url = `${URL_API}/best?limit=10${!isFirstLoad && after ?
+  const url = `${URL_API}/${page}?limit=10${!isFirstLoad && after ?
     `&after=${after}` : ''}`;
   axios.get(url, {
     headers: {
